@@ -11,10 +11,12 @@ const req_string = {
 
 
 const empresa_schema = new Schema({
-    ruc: String,
-    nombre: String,
-    domicilio: String,
-    telefono: String
+    empresa: {
+        type: Schema.ObjectId,
+        ref: 'empresa',
+    },    
+}, {
+    timestamps: true,
 })
 
 const representante_schema = new Schema({
