@@ -5,12 +5,11 @@ const controller = require('./controller')
 const route = express.Router()
 
 route.get('/', function(req, res) {
-    const filtro_empresa = req.query.codigo || null
-    controller.get_producto( filtro_empresa )
+    const filtro = req.query.codigo || null
+    controller.get_empresa( filtro )
         .then( (data) => response.success(req, res, data, 200) )
         .catch( (error) => response.error(req, res, error, 500) )
 })
-
 route.post('/', function(req, res) {
     controller.add_empresa( req.body )
         .then( (data) => response.success(req, res, data, 201) )

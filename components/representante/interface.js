@@ -1,26 +1,32 @@
 const express = require('express')
-const response = require('../../network/response')
 const controller = require('./controller')
+const response = require('../../network/response')
 
-const route = express.Router()
+const routes = express.Router()
 
-route.get('/', function(req, res) {
-    const filtro_representante = req.query.codigo || null
-    controller.get_representante( filtro_representante )
-        .then( (data) => response.success(req, res, data, 200) )
-        .catch( (error) => response.error(req, res, error, 500) )
-})
-
-route.post('/', function(req, res) {
+routes.post('/', function(req, res){
     controller.add_representante( req.body )
         .then( (data) => response.success(req, res, data, 201) )
-        .catch( (error) => response.error(req, res, error, 500) )
+        .catch( (error) => response.error(req, res, error, 400) )
 })
 
-route.patch('/', function(req, res) {
-    controller.update_representante( req.body )
+routes.get('/', function(req, res){
+    const filtro = req.query.ruc || null
+    controller.get_representante( filtro )
         .then( (data) => response.success(req, res, data, 200) )
-        .catch( (error) => response.error(req, res, error, 500) )
+      
 })
 
-module.exports = route
+routes.patch('/', function(req, res){
+    controller.update_representante( req.body )
+        .then( (data) => response.success(req, res, data, 201) )
+        .catch( (error) => response.error(req, res, error, 400) )
+})
+
+routes.delete('/', function(req, res){
+    controller.delete_representante( req.body )
+        .then( (data) => response.success(req, res, data, 201) )
+        .catch( (error) => response.error(req, res, error, 400) )
+})
+
+module.exports = routes

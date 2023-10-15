@@ -1,14 +1,13 @@
 const model = require('./model')
 
-function get_empresa( filtro_empresa ) {
+function get_empresa( empresa ) {
     let filtro = {}
-    if (filtro_empresa) {
-        filtro = { cedula: filtro_empresa }
+    if (empresa) {
+        filtro = { ruc: empresa }
     }
     const objeto = model.find( filtro )
     return objeto
 }
-
 function add_empresa( empresa ) {
     const objeto = new model( empresa )
     objeto.save()
